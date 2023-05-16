@@ -40,10 +40,9 @@ const StyledLinkText = styled.div`
 
 
 const AuthLinkText = ({ link }) => {
-  console.log(link)
   return (
     <StyledLinkText>
-      <Link to={link.SignUpPage}>{link.name}</Link >
+      <Link to={link.page}>{link.name}</Link >
     </StyledLinkText>
   );
 };

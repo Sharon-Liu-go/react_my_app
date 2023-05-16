@@ -4,7 +4,6 @@ import {
   AuthButton,
   AuthLinkText,
 } from '../components/common/auth.styled';
-import { ACLogoIcon } from '../assets/images';
 import { AuthInput } from '../components';
 
 const LoginPage = () => {
@@ -22,7 +21,7 @@ const LoginPage = () => {
         <AuthInput label='password' placeholder='請輸入密碼' />
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
-      <AuthLinkText link={{ name: '註冊', page: 'signup' }}></AuthLinkText>
+      <AuthLinkText link={{ name: '註冊', page: '/signup' }}></AuthLinkText>
     </AuthContainer >
   );
 };
