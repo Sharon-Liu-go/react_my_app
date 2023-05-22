@@ -50,12 +50,12 @@ const SignUpPage = () => {
         </AuthInputContainer>
 
         <AuthInputContainer>
-          <AuthInput label='password'
+          <AuthInput type='password' label='password'
             name='password' placeholder='密碼至少6位數,須包含英文大小寫及數字' value={formData.password} onChange={handleChange} />
         </AuthInputContainer>
 
         <AuthInputContainer>
-          <AuthInput label='password confirmation' name='passwordConfirm' placeholder='再次輸入密碼' value={formData.passwordConfirm} onChange={handleChange} />
+          <AuthInput type='password' label='password confirmation' name='passwordConfirm' placeholder='再次輸入密碼' value={formData.passwordConfirm} onChange={handleChange} />
         </AuthInputContainer>
         <AuthButton type='submit'>註冊</AuthButton>
         <AuthLinkText link={{ name: '登入', page: '/login' }}></AuthLinkText>

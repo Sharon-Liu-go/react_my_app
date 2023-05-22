@@ -22,11 +22,11 @@ const StyledInput = styled.input`
   border-radius: 0px;
 `;
 
-const AuthInput = ({ label, name, placeholder, value, onChange }) => {
+const AuthInput = ({ label, name, placeholder, value, onChange, type }) => {
   return (
     <StyledContainer>
       <StyledLabel>{label}</StyledLabel>
-      <StyledInput type="text" name={name} placeholder={placeholder} value={value} onChange={(event) => { onChange(event) }} />
+      <StyledInput type={type || "text"} name={name} placeholder={placeholder} value={value} onChange={(event) => { onChange(event) }} />
     </StyledContainer>
   );
 };

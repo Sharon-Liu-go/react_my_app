@@ -48,7 +48,7 @@ const LoginPage = () => {
         </AuthInputContainer>
 
         <AuthInputContainer>
-          <AuthInput label='password' placeholder='請輸入密碼' name='password' value={formData.password} onChange={handleChange} />
+          <AuthInput type='password' label='password' placeholder='請輸入密碼' name='password' value={formData.password} onChange={handleChange} />
         </AuthInputContainer>
         <AuthButton>登入</AuthButton>
         <AuthLinkText link={{ name: '註冊', page: '/signup' }}></AuthLinkText>
