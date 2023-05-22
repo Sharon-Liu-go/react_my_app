@@ -16,7 +16,6 @@ const SignUpPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const response = await fetch('http://127.0.0.1:4000/signup', {
         method: 'POST',
@@ -44,21 +43,23 @@ const SignUpPage = () => {
       <div>
       </div>
       <h1>註冊會員</h1>
-      {/* <form onSubmit={handleSubmit}> */}
-      <AuthInputContainer>
-        <AuthInput label='username' placeholder='請輸入帳號' value={formData.username} onChange={handleChange} />
-      </AuthInputContainer>
+      <form onSubmit={handleSubmit}>
+        <AuthInputContainer>
+          <AuthInput label='username'
+            name='username' placeholder='請輸入帳號' value={formData.username} onChange={handleChange} />
+        </AuthInputContainer>
 
-      <AuthInputContainer>
-        <AuthInput label='password' placeholder='密碼至少6位數,須包含英文大小寫及數字' value={formData.password} onChange={handleChange} />
-      </AuthInputContainer>
+        <AuthInputContainer>
+          <AuthInput label='password'
+            name='password' placeholder='密碼至少6位數,須包含英文大小寫及數字' value={formData.password} onChange={handleChange} />
+        </AuthInputContainer>
 
-      <AuthInputContainer>
-        <AuthInput label='password confirmation' placeholder='再次輸入密碼' value={formData.passwordConfirm} onChange={handleChange} />
-      </AuthInputContainer>
-      <AuthButton type='submit'>註冊</AuthButton>
-      <AuthLinkText link={{ name: '登入', page: '/login' }}></AuthLinkText>
-      {/* </form > */}
+        <AuthInputContainer>
+          <AuthInput label='password confirmation' name='passwordConfirm' placeholder='再次輸入密碼' value={formData.passwordConfirm} onChange={handleChange} />
+        </AuthInputContainer>
+        <AuthButton type='submit'>註冊</AuthButton>
+        <AuthLinkText link={{ name: '登入', page: '/login' }}></AuthLinkText>
+      </form >
     </AuthContainer >
 
   );
