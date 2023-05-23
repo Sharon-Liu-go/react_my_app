@@ -13,8 +13,7 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    console.log(req.body)
-    res.send('login')
+    res.send({ code: 0, msg: 'success', data: { authToken: 'IamAQueen' } })
 })
 
 app.listen(port, () => {

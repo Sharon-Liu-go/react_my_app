@@ -1,6 +1,6 @@
 import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { LoginPage, SignUpPage, homePage } from './pages';
+import { LoginPage, SignUpPage, HomePage } from './pages';
 function App() {
   return (
     <div className="app">
@@ -8,7 +8,7 @@ function App() {
         <Routes>
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignUpPage />} />
-          <Route path="home" element={<homePage />} />
+          <Route path="home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -6,6 +6,9 @@ import {
 } from '../components/common/auth.styled';
 import { AuthInput } from '../components';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -13,28 +16,31 @@ const LoginPage = () => {
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:4000/signup', {
+      const response = await axios('http://127.0.0.1:4000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
+      const { authToken } = response.data.data;
+      if (authToken) {
         console.log('POST 请求成功');
-        // 处理成功的响应逻辑
-      } else {
-        console.error('POST 请求失败');
-        // 处理失败的响应逻辑
+        localStorage.setItem('authToken', authToken);
+        Swal.fire(swalFireMsg('success'));
+        navigate('/home')
+        return;
       }
+      console.error('POST 请求失败');
+      Swal.fire(swalFireMsg('fail'));
+
     } catch (error) {
       console.error('POST 请求出错：', error);
-      // 处理请求错误逻辑
+      Swal.fire(swalFireMsg('fail'));
     }
   };
   return (
@@ -56,5 +62,24 @@ const LoginPage = () => {
     </AuthContainer >
   );
 };
+
+function swalFireMsg(type) {
+  if (type === 'success') {
+    return {
+      position: 'top',
+      title: '登入成功！',
+      timer: 1000,
+      icon: 'success',
+      showConfirmButton: false,
+    }
+  }
+  return {
+    position: 'top',
+    title: '登入失敗！',
+    timer: 1000,
+    icon: 'error',
+    showConfirmButton: false,
+  };
+}
 
 export default LoginPage;
