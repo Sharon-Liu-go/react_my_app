@@ -9,20 +9,13 @@ function App() {
           <Routes>
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
-            {/* <Route path="home" element={<HomePage />} /> */}
-          </Routes>
-        </BrowserRouter>
-      </div>
-
-      <div>
-        <BrowserRouter>
-          <Routes>
             <Route path="home" element={<HomePage />} />
             <Route path="Chatroom" element={<ChatroomPage />} />
           </Routes>
-        </BrowserRouter>
+
+        </BrowserRouter >
       </div>
-    </div>
+    </div >
 
   );
 }
