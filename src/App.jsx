@@ -1,6 +1,6 @@
 import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { LoginPage, SignUpPage, HomePage } from './pages';
+import { LoginPage, SignUpPage, HomePage, ChatroomPage } from './pages';
 function App() {
   return (
     <div>
@@ -18,6 +18,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="home" element={<HomePage />} />
+            <Route path="Chatroom" element={<ChatroomPage />} />
           </Routes>
         </BrowserRouter>
       </div>
