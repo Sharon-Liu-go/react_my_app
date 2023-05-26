@@ -1,29 +1,21 @@
 //import React from 'react';
-import { Container, Box, Grid, Paper, MenuItem, MenuList, Stack } from '@mui/material';
+import { Container, Box, Grid, Paper, MenuItem, MenuList, Stack, TextField, Button, List, ListItem, ListItemText } from '@mui/material';
 import { Sidebar, ChatRoom } from '../components';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import { rootShouldForwardProp } from '@mui/material/styles/styled';
+import {
+  AuthContainer,
+  AuthInputContainer,
+  AuthButton,
+  AuthLinkText,
+} from '../components/common/auth.styled';
 
 
 
 const ChatroomPage = () => {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-
 
   return (
     <Stack direction="row" spacing={2} sx={{ width: '100vw', height: '100vh' }}>
@@ -33,6 +25,8 @@ const ChatroomPage = () => {
   );
 };
 
+
+let chatField = <p></p>
 
 
 
@@ -50,18 +44,21 @@ const Content = () => {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     // 在組件加載時建立 Socket.io 連接
-    //const newSocket = io('http://localhost:4000');
-    //setSocket(newSocket);
+    const newSocket = io('http://127.0.0.1:4000');
+    setSocket(newSocket);
 
     // 清理函數，組件卸載時關閉 Socket.io 連接
     return () => {
-      //newSocket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
 
   useEffect(() => {
     if (socket) {
       // 註冊事件監聽器
+      socket.on('connect', () => {
+        console.log('Connected to server');
+      });
       socket.on('event', handleEvent);
     }
   }, [socket]);
@@ -72,27 +69,22 @@ const Content = () => {
   };
 
   let [room, setRoom] = useState([]);
-  let chatRoom = <div>JJ</div>;
 
   const handleJoinRoom = (roomId, roomName) => {
     console.log(roomId)
     console.log(roomName)
-    //if (socket) {
-    // 傳送事件到 Socket.io 伺服器
-    //socket.emit('room', roomId);
-    const newRoom = { key: roomId, name: roomName };
-    setRoom(room = [newRoom]);
-    console.log(room)
-    //}
+    if (socket) {
+      //傳送事件到 Socket.io 伺服器
+      socket.emit('room', roomId);
+      const newRoom = { key: roomId, name: roomName };
+      setRoom(room = [newRoom]);
+      console.log(room)
+    }
 
-    if (room.length) {
-      chatRoom = <div>hoho</div>
+    if (room.length > 0) {
+      chatField = <p>待完工</p>
     }
   }
-
-
-
-
   return (
     <Stack sx={{ width: '100%', height: '100vh' }}>
       <Stack>
@@ -124,9 +116,8 @@ const Content = () => {
           </Grid>
         </Stack>
         <Stack sx={{ width: '40%', height: '100vh' }}>
-          456
+          <p>主聊天室</p>
         </Stack>
-        {chatRoom}
       </Stack>
     </Stack >
   );

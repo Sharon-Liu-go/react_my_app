@@ -20,13 +20,32 @@ const StyledInput = styled.input`
   border-radius: 0px;
 `;
 
+const StyledTextCol = styled.div`
+  outline: grey;
+  border: 1px;
+  background-color: #f5f8fa;
+  border-radius: 0px;
+`;
+
+const StyledButton = styled.button`
+  outline: grey;
+  border: 1px;
+  background-color: #f5f8fa;
+  border-radius: 0px;
+`;
+
+
 const ChatRoom = (roomId, roomName) => {
   return (
-
-    <StyledTitle>
-      {roomName}
-    </StyledTitle>
-
+    <StyledContainer>
+      <StyledTitle>
+        {roomName}
+      </StyledTitle>
+      <StyledTextCol>
+        haha
+      </StyledTextCol>
+      <StyledButton>送出</StyledButton>
+    </StyledContainer>
   );
 };
 

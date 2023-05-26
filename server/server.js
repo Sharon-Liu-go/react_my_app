@@ -5,17 +5,52 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const utilsToken = require('./utils/token')
+const CryptoJS = require("crypto-js");
+const pwdSecret = 'I_am_a_pwdSecret'
 
 app.use(cors());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+//temp
+let users = {};
+
 app.post('/signup', (req, res) => {
-    console.log(req.body)
-    res.send('signup')
+    console.log(req)
+    const { username, passward } = req.body;
+    let encryptPwd = CryptoJS.AES.encrypt(passward, pwdSecret).toString();
+    users[username] = {
+        name: username,
+        password: encryptPwd
+    }
+    console.log(users)
+    res.send({ code: 0, msg: 'success' });
 })
 
-app.post('/login', (req, res) => {
-    res.send({ code: 0, msg: 'success', data: { authToken: 'IamAQueen' } })
+
+app.post('/login', async (req, res) => {
+    const { username, passward } = req.body;
+    if (!users[username]) {
+        return res.send({ code: 1, msg: 'login fail' })
+    }
+
+    var bytes = CryptoJS.AES.decrypt(users[username].password, pwdSecret);
+    var decryptPassword = bytes.toString(CryptoJS.enc.Utf8);
+    if (passward === decryptPassword) {
+        return res.send({ code: 1, msg: 'login fail' })
+
+    }
+    const authToken = utilsToken.generateToken({ name: username })
+    res.send({ code: 0, msg: 'success', data: { authToken } })
+
 })
 
 io.on('connection', function (socket) {
